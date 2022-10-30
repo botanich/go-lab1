@@ -1,0 +1,1 @@
+# Ihor Ramskyi's GO lab1

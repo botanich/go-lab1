@@ -1,0 +1,26 @@
+package retry
+
+import "fmt"
+
+type DefaultRetriable struct {
+	maxAttempts uint
+}
+
+func (self DefaultRetriable) GetMaxAttempts() uint {
+	return self.maxAttempts
+}
+
+func (self DefaultRetriable) Retry(action func() bool) {
+	var i uint
+	for i = 0; i < self.maxAttempts; i++ {
+		fmt.Printf("Attempt number %d:", i)
+		var attemptResult = action()
+		if attemptResult {
+			fmt.Println("success!")
+			return
+		} else {
+			fmt.Println("failed")
+		}
+	}
+	fmt.Println("All of the", self.maxAttempts, "attempts failed")
+}
