@@ -19,13 +19,12 @@ func (dr DefaultRetriable) GetMaxAttempts() uint {
 func (dr DefaultRetriable) Retry(action func() bool) {
 	var i uint
 	for i = 1; i <= dr.maxAttempts; i++ {
-		fmt.Printf("Attempt number %d:", i)
 		var attemptResult = action()
 		if attemptResult {
-			fmt.Println("success!")
+			fmt.Printf("Attempt number %d: success!\n", i)
 			return
 		} else {
-			fmt.Println("failed")
+			fmt.Printf("Attempt number %d: failed\n", i)
 		}
 	}
 	fmt.Println("All of the", dr.maxAttempts, "attempts failed")

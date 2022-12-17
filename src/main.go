@@ -11,7 +11,8 @@ func ret_false() bool {
 }
 
 func rand_bool() bool {
-	return rand.Intn(5) == 0  // 0.2 probability of true
+	x := rand.Intn(5)
+	return x == 0  // 0.2 probability of true
 }
 
 func main() {
@@ -19,6 +20,10 @@ func main() {
 	retriable.Retry(ret_false)
 	retriable.Retry(rand_bool)
 
-	
+	fmt.Println("--------------------------------------------")
+
+	delayRetriable := retry.NewRetriableWithDelay(7, 1)
+	delayRetriable.Retry(ret_false)
+	delayRetriable.Retry(rand_bool)
 	fmt.Println("--------------------------------------------")
 }
